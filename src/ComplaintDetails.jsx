@@ -1,8 +1,7 @@
 import React from "react";
 import LoadingComponent from './LoadingComponent'
-import { Typography } from "@mui/material";
 
-const ComplaintDetails = ({ data, loading, error }) => {
+const ComplaintDetails = ({ data, loading }) => {
   const containerStyle = {
     fontFamily: "Arial, sans-serif",
     border: "1px solid #ccc",
@@ -72,16 +71,6 @@ const ComplaintDetails = ({ data, loading, error }) => {
     );
   };
 
-  if (error)
-  {
-    return (
-      <div style={containerStyle}>
-        <div style={loadingStyle}>
-          <Typography component={"h6"}>Error in loading the page check if the Request ID is Valid</Typography>
-        </div>
-      </div>
-    );
-  }
   if (loading) {
     return (
       <div style={containerStyle}>

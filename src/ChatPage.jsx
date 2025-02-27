@@ -16,10 +16,10 @@ const getBGColor = (user) => {
 
 const getSenderName = (sender) => {
   switch (sender.toLowerCase()) {
-    case 'judge':
-      return 'قاضٍ';
-    case 'critic':
-      return 'ناقد';
+    case 'speaker':
+      return 'Speaker';
+    case 'user':
+      return 'User';
     case 'defendant':
       return 'مدعى عليه';
     case 'user':
@@ -30,24 +30,28 @@ const getSenderName = (sender) => {
 };
 
 const MessageComponent = ({ message, index }) => {
-  if (index === 0) {
-    try {
-      const jsonValue = JSON.parse(message.text);
-      console.log(jsonValue)
-      return <Typography variant="body1">{message.text.request_number}</Typography>;
-    } catch (error) {
-      return <Typography variant="body1">Invalid JSON</Typography>;
-    }
-  }
+  // if (index === 0) {
+  //   try {
+  //     const jsonValue = JSON.parse(message.text);
+  //     console.log(jsonValue)
+  //     return <Typography variant="body1">{message.text.request_number}</Typography>;
+  //   } catch (error) {
+  //     return <Typography variant="body1">Invalid JSON</Typography>;
+  //   }
+  // }
   return <Typography variant="body1">{message.text}</Typography>;
 };
 
 const ChatApp = ({ messages }) => {
+
+  console.log("Message")
+  console.log(messages)
+  
   return (
     <Paper
       elevation={3}
       sx={{
-        width: '50vw',
+        
         height: '65vh',
         display: 'flex',
         flexDirection: 'column',
@@ -99,7 +103,7 @@ const ChatApp = ({ messages }) => {
                 wordWrap: 'break-word', // Ensures long text wraps within the box
               }}
             >
-                <div className='senderName' style={{ fontFamily: 'Arial, sans-serif', direction: 'rtl' }}>
+                <div className='senderName' style={{ fontFamily: 'Arial, sans-serif' }}>
                   {getSenderName(message.sender)}
                 </div>
               <MessageComponent message={message} index={index} />

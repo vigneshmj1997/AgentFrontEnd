@@ -13,47 +13,80 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+// Define the request payload
+const payload = {
+  "question": "string"
+};
   const handleSend = async () => {
     if (input.trim()) {
       setLoading(true);
       try {
-        let initialResponse = await axios.get('http://localhost:8000/get-data', {
-          params: { request_id: input }
-        });
-        setData(initialResponse.data);
-        setLoading(false);
-
-        setMessages((prevMessages) => [
+        // let initialResponse = await axios.post('http://192.168.130.232:8000/expert-response/', {
+        //   params: { request_id: input }
+        // });
+        payload.question = input;
+        axios.post('http://192.168.130.232:8000/ask',payload, {
+          headers: {
+           'accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            // Handle the successful response
+            console.log('Response:', response.data);
+            setData(response.data);
+             setMessages((prevMessages) => [
           ...prevMessages,
-          { text: JSON.stringify(initialResponse.data), sender: 'user' }
+          { text: response.data.question, sender: 'user' }
         ]);
-        setInput('');
-
-        let secondResponse = await axios.post('http://localhost:8000/invoke', {
-          message: JSON.stringify(initialResponse.data),
-        });
-
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: secondResponse.data.messages, sender: secondResponse.data.speaker }
-        ]);
-
-        const currentThreadId = secondResponse.data.thread_id;
-        while (secondResponse.data.next_agent !== '__end__') {
-          let response = await axios.post('http://localhost:8000/invoke', {
-            thread_id: currentThreadId,
-          });
-
           setMessages((prevMessages) => [
             ...prevMessages,
-            { text: response.data.messages, sender: response.data.speaker }
+            { text: response.data.result, sender: 'speaker' }
           ]);
+        setInput('');
+            setLoading(false);
+          })
+          .catch(error => {
+            // Handle any errors
+            if (error.response) {
+              console.error('Error Response:', error.response.data);
+            } else {
+              console.error('Error:', error.message);
+            }
+          });
+        // setData(initialResponse.data);
+        // setLoading(false);
 
-          if (response.data.next_agent === '__end__') break;
-        }
+        // setMessages((prevMessages) => [
+        //   ...prevMessages,
+        //   { text: JSON.stringify(initialResponse.data), sender: 'user' }
+        // ]);
+        // setInput('');
+
+        // let secondResponse = await axios.post('http://localhost:8000/invoke', {
+        //   message: JSON.stringify(initialResponse.data),
+        // });
+
+        // setMessages((prevMessages) => [
+        //   ...prevMessages,
+        //   { text: secondResponse.data.messages, sender: secondResponse.data.speaker }
+        // ]);
+
+        // const currentThreadId = secondResponse.data.thread_id;
+        // while (secondResponse.data.next_agent !== '__end__') {
+        //   let response = await axios.post('http://localhost:8000/invoke', {
+        //     thread_id: currentThreadId,
+        //   });
+
+        //   setMessages((prevMessages) => [
+        //     ...prevMessages,
+        //     { text: response.data.messages, sender: response.data.speaker }
+        //   ]);
+
+        //   if (response.data.next_agent === '__end__') break;
+        // }
       } catch (error) {
         console.error('Error communicating with the server:', error);
-        setError(true);
       }
     }
   };
@@ -70,7 +103,7 @@ function App() {
       </MyAppBar>
 
         <Box display="flex" flex={1} p={2} gap={2} sx={{ overflow: 'hidden' }}>
-          
+
           {/* Chat Section */}
           <Paper
             elevation={3}
@@ -91,7 +124,7 @@ function App() {
                 style={{ height: '30px', marginRight: '10px', fontFamily: 'Calibre, Arial, sans-serif' }}
               />
               <Typography variant="h5"  sx={{ color: '#8A1538', fontFamily: 'Calibre, Arial, sans-serif'}}>
-                Chat Window 
+                Chat Window
               </Typography>
             </Box>
 
@@ -138,30 +171,9 @@ function App() {
             </Box>
           </Paper>
 
-          {/* Complaint Details Section */}
-          <Paper
-            elevation={3}
-            sx={{
-              flex: 1,
-              backgroundColor: '#FFFFFF',
-              borderRadius: 3,
 
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              boxShadow: '2px 4px 10px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            <Typography variant="h5" sx={{ color: '#0D4261', mb: 2, mr:10,mt:2, fontFamily: 'Calibre, Arial, sans-serif'}}>
-              Request Details
-            </Typography>
-            <Box flex={1}>
-              <ComplaintDetails data={data} loading={loading} error={error}/>
-            </Box>
-          </Paper>
-          
         </Box>
-      
+
     </Box>
   );
 }
