@@ -20,7 +20,7 @@ function Agents() {
       if (input.trim()) {
         setLoading(true);
         try {
-          let initialResponse = await axios.get('http://192.168.130.229:8000/get-data', {
+          let initialResponse = await axios.get('https://192.168.130.229:8000/get-data', {
             params: { request_id: input }
           });
           setData(initialResponse.data);
@@ -32,7 +32,7 @@ function Agents() {
           ]);
           setInput('');
   
-          let secondResponse = await axios.post('http://192.168.130.229:8000/invoke', {
+          let secondResponse = await axios.post('https://192.168.130.229:8000/invoke', {
             message: JSON.stringify(initialResponse.data),
           });
   
@@ -43,7 +43,7 @@ function Agents() {
   
           const currentThreadId = secondResponse.data.thread_id;
           while (secondResponse.data.next_agent !== '__end__') {
-            let response = await axios.post('http://192.168.130.229:8000/invoke', {
+            let response = await axios.post('https://192.168.130.229:8000/invoke', {
               thread_id: currentThreadId,
             });
   

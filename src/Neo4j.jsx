@@ -20,11 +20,11 @@ const payload = {
     if (input.trim()) {
       setLoading(true);
       try {
-        // let initialResponse = await axios.post('http://192.168.130.232:8001/expert-response/', {
+        // let initialResponse = await axios.post('https://192.168.130.232:8001/expert-response/', {
         //   params: { request_id: input }
         // });
         payload.question = input;
-        axios.post('http://192.168.130.232:8001/ask',payload, {
+        axios.post('https://192.168.130.232:8001/ask',payload, {
           headers: {
            'accept': 'application/json',
             'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ const payload = {
         // ]);
         // setInput('');
 
-        // let secondResponse = await axios.post('http://localhost:8000/invoke', {
+        // let secondResponse = await axios.post('https://localhost:8000/invoke', {
         //   message: JSON.stringify(initialResponse.data),
         // });
 
@@ -73,7 +73,7 @@ const payload = {
 
         // const currentThreadId = secondResponse.data.thread_id;
         // while (secondResponse.data.next_agent !== '__end__') {
-        //   let response = await axios.post('http://localhost:8000/invoke', {
+        //   let response = await axios.post('https://localhost:8000/invoke', {
         //     thread_id: currentThreadId,
         //   });
 
