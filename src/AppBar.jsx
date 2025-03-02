@@ -27,7 +27,7 @@ function MyAppBar() {
           <Box
             component="img"
             sx={{
-              height: 80,
+              height: 100,
               marginRight: 2, // Space between logo and text
               padding:1
             }}

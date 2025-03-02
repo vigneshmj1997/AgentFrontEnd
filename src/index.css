@@ -1,5 +1,6 @@
-.senderName{
-    font-size: 18px;    
-    margin: 10px;
-    font-weight: 900;
+body {
+    margin: 0!important;;
+    height: 98%!important;
+    width: 100%!important;
+    overflow-y: hidden;
 }

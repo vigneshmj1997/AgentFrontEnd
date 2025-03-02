@@ -7,7 +7,7 @@ function WebSocketChat() {
 
   useEffect(() => {
     // Initialize WebSocket connection
-    ws.current = new WebSocket("ws://localhost:8080/ws");
+    ws.current = new WebSocket("ws://192.168.130.229:8080/ws");
 
     // Set up event listener for incoming messages
     ws.current.onmessage = (event) => {
