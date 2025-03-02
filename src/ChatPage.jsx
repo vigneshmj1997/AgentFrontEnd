@@ -30,16 +30,9 @@ const getSenderName = (sender) => {
 };
 
 const MessageComponent = ({ message, index }) => {
-  if (index === 0) {
-    try {
-      const jsonValue = JSON.parse(message.text);
-      console.log(jsonValue)
-      return <Typography variant="body1">{message.text.request_number}</Typography>;
-    } catch (error) {
-      return <Typography variant="body1">Invalid JSON</Typography>;
-    }
+  {
+   return <Typography variant="body1">{message.text}</Typography>;
   }
-  return <Typography variant="body1">{message.text}</Typography>;
 };
 
 const ChatApp = ({ messages }) => {
@@ -72,7 +65,7 @@ const ChatApp = ({ messages }) => {
           },
         }}
       >
-        {messages.map((message, index) => (
+        {messages.slice(1).map((message, index) => (
           <Box
             key={index}
             sx={{
