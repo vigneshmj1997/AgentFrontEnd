@@ -17,11 +17,11 @@ const getBGColor = (user) => {
 const getSenderName = (sender) => {
   switch (sender.toLowerCase()) {
     case 'judge':
-      return 'قاضٍ';
+      return 'الوسيط';
     case 'critic':
-      return 'ناقد';
+      return 'ناقض الطلب';
     case 'defendant':
-      return 'مدعى عليه';
+      return 'داعم الطلب';
     case 'user':
       return 'أنت'; // This means "You" in Arabic
     default:
