@@ -1,13 +1,12 @@
 import './App.css';
 import ChatApp from './ChatPage';
-import ComplaintDetails from './ComplaintDetails';
 import MyAppBar from './AppBar';
 import React, { useState } from "react";
 import { Box, TextField, IconButton, CircularProgress, Paper, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
 
-function App() {
+function Neo4j() {
   const [input, setInput] = useState('');
   const [data, setData] = useState({});
   const [messages, setMessages] = useState([]);
@@ -21,7 +20,7 @@ const payload = {
     if (input.trim()) {
       setLoading(true);
       try {
-        // let initialResponse = await axios.post('http://192.168.130.232:8000/expert-response/', {
+        // let initialResponse = await axios.post('https://lmis-arbitratoragent-api.mol.gov.qa/expert-response/', {
         //   params: { request_id: input }
         // });
         payload.question = input;
@@ -178,4 +177,4 @@ const payload = {
   );
 }
 
-export default App;
+export default Neo4j;
